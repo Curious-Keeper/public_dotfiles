@@ -62,4 +62,4 @@ These configs are meant for reference/inspiration. To use:
 
 ## License
 
-Feel free to use and adapt. No attribution required.
+Feel free to use and adapt. No attribution required. Use at your own risk and skill level. No guarantee or waranty. 
