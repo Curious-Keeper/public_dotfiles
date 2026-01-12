@@ -1,0 +1,246 @@
+# Starship Configuration - Clean Text Style
+# https://starship.rs/config/
+
+# Timeout for commands (in milliseconds)
+command_timeout = 1000
+
+# Main prompt format
+format = """
+$os\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$python\
+$nodejs\
+$rust\
+$golang\
+$php\
+$docker_context\
+$conda\
+$aws\
+$azure\
+$gcloud\
+$time\
+$line_break\
+$character"""
+
+# Right prompt
+right_format = """$cmd_duration"""
+
+# Newline between prompts
+add_newline = true
+
+# ============================================================================
+# PROMPT MODULES
+# ============================================================================
+
+[os]
+disabled = false
+style = "bold #5E81AC"
+format = '[$symbol ]($style)'
+
+[os.symbols]
+Alpaquita = ""
+Alpine = ""
+AlmaLinux = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = ""
+CachyOS = ""
+CentOS = ""
+Debian = ""
+DragonFly = ""
+EndeavourOS = "󰣇"
+Fedora = ""
+FreeBSD = ""
+Garuda = "󰛓"
+Gentoo = ""
+HardenedBSD = "󰞌"
+Illumos = "󰈸"
+Kali = ""
+Linux = ""
+Mabox = ""
+Macos = ""
+Manjaro = ""
+Mariner = ""
+MidnightBSD = ""
+Mint = "󰣭"
+NetBSD = ""
+NixOS = ""
+OpenBSD = "󰈺"
+openSUSE = ""
+Pop = ""
+Raspbian = ""
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+RockyLinux = ""
+Solus = "󰠳"
+SUSE = ""
+Ubuntu = ""
+Ultramarine = "󰜃"
+Unknown = ""
+Void = ""
+Windows = "󰍲"
+
+[username]
+show_always = true
+style_user = " #b7dfeb"
+style_root = "bold #e41227"
+format = '[$user ]($style)'
+
+[hostname]
+ssh_only = false
+style = "bold #53e953"
+format = '[lost in $hostname 🎩]($style) '
+ssh_symbol = "󰣀 "
+trim_at = "."
+
+[directory]
+style = "bold #EBCB8B"
+format = '[$path]($style)[$read_only]($read_only_style) '
+truncation_length = 3
+truncate_to_repo = false
+truncation_symbol = "…/"
+read_only = " 󰌾"
+read_only_style = "bold #BF616A"
+
+[directory.substitutions]
+# Uncomment these once Nerd Fonts are working in Kitty:
+# "Documents" = "󰈙 "
+# "Downloads" = " "
+# "Music" = "󰝚 "
+# "Pictures" = " "
+# "Projects" = "󰲋 "
+# "git_projects" = " "
+# ".config" = " "
+
+[git_branch]
+symbol = ""
+style = "bold #B48EAD"
+format = '[$symbol $branch]($style) '
+
+[git_status]
+style = ""
+format = '$all_status$ahead_behind'
+conflicted = "[⚡](bold #BF616A)"
+ahead = "[⇡${count}](bold #A3BE8C)"
+behind = "[⇣${count}](bold #EBCB8B)"
+diverged = "[⇕⇡${ahead_count}⇣${behind_count}](bold #D08770)"
+up_to_date = "[✓](bold #A3BE8C) "
+untracked = "[?${count}](bold #EBCB8B)"
+stashed = "[󰏗 ${count}](bold #B48EAD)"
+modified = "[!${count}](bold #D08770)"
+staged = "[+${count}](bold #A3BE8C)"
+renamed = "[»${count}](bold #88C0D0)"
+deleted = "[✗${count}](bold #BF616A)"
+
+# ============================================================================
+# PYTHON & VIRTUAL ENVIRONMENTS
+# ============================================================================
+
+[python]
+symbol = "🐍 (VENV)"
+style = "bold #A3BE8C"
+format = '[$symbol $virtualenv]($style) '
+python_binary = ["python3", "python"]
+detect_extensions = ["py"]
+detect_files = ["requirements.txt", "pyproject.toml", "setup.py", "Pipfile", ".python-version"]
+detect_folders = ["venv", ".venv", "env", ".env"]
+
+[conda]
+symbol = "󱔎"
+style = "bold #A3BE8C"
+format = '[$symbol $environment]($style) '
+ignore_base = false
+
+# ============================================================================
+# LANGUAGE MODULES
+# ============================================================================
+
+[nodejs]
+symbol = ""
+style = "bold #A3BE8C"
+format = '[$symbol ($version)]($style) '
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+[rust]
+symbol = ""
+style = "bold #D08770"
+format = '[$symbol ($version)]($style) '
+
+[golang]
+symbol = ""
+style = "bold #88C0D0"
+format = '[$symbol ($version)]($style) '
+
+[php]
+symbol = ""
+style = "bold #B48EAD"
+format = '[$symbol ($version)]($style) '
+
+# ============================================================================
+# CONTAINERS
+# ============================================================================
+
+[docker_context]
+symbol = ""
+style = "bold #88C0D0"
+format = '[$symbol $context]($style) '
+only_with_files = true
+
+# ============================================================================
+# CLOUD & REMOTE
+# ============================================================================
+
+[aws]
+disabled = false
+symbol = ""
+style = "bold #EBCB8B"
+format = '[$symbol ($profile)(\[$region\])]($style) '
+
+[azure]
+disabled = false
+symbol = "󰠅"
+style = "bold #5E81AC"
+format = '[$symbol ($subscription)]($style) '
+
+[gcloud]
+disabled = false
+symbol = "󱇶"
+style = "bold #88C0D0"
+format = '[$symbol ($account)(\[$region\])]($style) '
+
+# ============================================================================
+# TIME & STATUS
+# ============================================================================
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "dimmed #D8DEE9"
+format = '[ $time]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+success_symbol = "[❯](bold #A3BE8C)"
+error_symbol = "[❯](bold #BF616A)"
+vimcmd_symbol = "[❮](bold #A3BE8C)"
+
+[cmd_duration]
+min_time = 2000
+style = "dimmed #D8DEE9"
+format = "[󱎫 $duration]($style)"
+show_milliseconds = false
+
+# ============================================================================
+# DISABLED MODULES
+# ============================================================================
+
+[package]
+disabled = true

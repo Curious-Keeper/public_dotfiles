@@ -1,0 +1,123 @@
+{
+  "layer": "top",
+  "position": "top",
+  "margin-top": 5,
+  "margin-left": 5,
+  "margin-right": 5,
+  "margin-bottom": 0,
+
+"hyprland/workspaces": {
+  "swap-icon-label": false
+},
+
+// Left section (workspaces + window info)
+  "modules-left": ["custom/power", "hyprland/workspaces", "hyprland/window"],
+
+// Center Section (for later)
+  "modules-center": [],
+
+// Right section (system info + custom buttons)
+  "modules-right": [
+	"custom/firefox",
+	"custom/thunar",
+	"custom/terminal",
+	"pulseaudio",
+	"tray",
+	"custom/network",
+	"battery",
+	"clock"
+],
+
+// Custom launchers
+  "custom/firefox": {
+        "format": "",
+        "tooltip": "Open Firefox",
+        "on-click": "firefox"
+},
+
+  "custom/thunar": {
+        "format": "",
+        "tooltip": "Open Thunar",
+        "on-click": "thunar"
+},
+
+  "custom/terminal": {
+        "format": "",
+        "tooltip": "Open Kitty",
+        "on-click": "kitty"
+},
+
+// PulseAudio
+"pulseaudio": {
+  // Main line
+  "format": "  {volume}%",
+  "format-muted": "󰖁  muted",
+  "format-bluetooth": " {volume}% ",
+  "tooltip": true,
+  "tooltip-format": "Volume: {volume}%",
+
+// Icon set (requires a Nerd Font / Font Awesome installed on Waybar)
+  "format-icons": {
+    "headphones": "󰋋",
+    "headset": "󰋎",
+    "handsfree": "󰋎",
+    "hdmi": "󰡁",
+    "speaker": ["󰕿","󰖀","󰕾"]
+},
+
+// Actions
+  "on-click": "pavucontrol",                                  // open mixer
+  "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+  "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+  "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+
+  // Optional: step size for Waybar’s internal handling (kept here for clarity)
+  "scroll-step": 5
+},
+
+// Network Configs (masked SSID: HOME/AWAY)
+  "custom/network": {
+    "exec": "~/.config/waybar/scripts/wifi-location.sh",
+    "return-type": "json",
+    "interval": 5,
+
+// Display
+    "format": "{}",
+    "tooltip": true,
+
+// NM GUI editor
+    "on-click": "nm-connection-editor",
+
+// Right-Click: open TUI with kitty
+    "on-click-right": "kitty -e nmtui",
+
+// Scroll toggles Wi-Fi radio
+    "on-scroll-up": "nmcli radio wifi on",
+    "on-scroll-down": "nmcli radio wifi off"
+},
+
+// Simple Tray
+  "tray": {
+	"icon-size": 18
+},
+
+  "custom/power": {
+	"format": "⏻",
+	"tooltip": "Power",
+	"on-click": "~/.config/waybar/scripts/power-menu.sh",
+	"interval": 86400,
+	"class": "module-active"   // gives the subtle gradient chip
+},
+
+  "clock": {
+	"format": "{:%a %b %d  %H:%M}"
+},
+
+  "battery": {
+    "format": "{icon}",
+    "format-charging": "{icon} 󱐋",
+    "format-plugged": "󰚥",
+    "format-icons": ["󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "tooltip": true
+ }
+}

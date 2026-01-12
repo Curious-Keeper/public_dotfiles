@@ -1,0 +1,165 @@
+/* ===== Waybar — matches your Hyprland look =====
+   Hyprland: border_size=2 ; rounding=5
+   Accent: #33ccff → #00ff99 ; Inactive border: #595959aa
+*/
+
+/* Global */
+* {
+  font-family:
+    "Hack Nerd Font",
+    "Symbols Nerd Font Mono",
+    "Font Awesome 7 Free",
+    "FontAwesome",
+    monospace;
+  min-height: 0px;
+  font-size: 11pt;
+}
+window { background: transparent; }
+
+/* Bar container */
+/* Bar container (make it transparent so we can draw 3 “capsules”) */
+#waybar {
+  color: #eeeeee;
+  background: transparent;
+  padding: 0;          /* important */
+  border: none;        /* important */
+  box-shadow: none;    /* important */
+}
+
+/* 3 segment capsules */
+.modules-left,
+.modules-right {
+  background: rgba(4,102,116,0.60);
+  border: 2px solid transparent;      /* keeps your “window border align” vibe */
+  border-radius: 12px;                /* adjust for roundness */
+  padding: 2px 8px;                   /* internal spacing */
+  margin: 2px 6px;                    /* the “gap” between segments */
+  box-shadow: 0 8px 24px -12px rgba(26,26,26,0.93);
+}
+
+/* ---------- Workspaces (chips) ---------- */
+#workspaces button {
+  padding: 0 6px;
+  margin: 0 2px;
+  border-radius: 4px;
+  background: rgba(26,26,26,0.75);
+  border: 1px solid rgba(89,89,89,0.67); /* inactive border tone */
+  color: #ddd;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+#workspaces button.active {
+  background: linear-gradient(45deg, rgba(51,204,255,0.10), rgba(0,255,153,0.40));
+  border-color: rgba(51,204,255,0.55);
+  color: #00ff99;
+}
+
+#workspaces button:hover {
+  background: rgba(89,89,89,0.75);
+  color: #00ff99;
+  border-color: rgba(51,204,255,0.55);
+}
+
+/* ---------- Module baseline chips ---------- */
+#clock, #battery, #network, #pulseaudio,
+#custom-firefox, #custom-thunar, #custom-terminal,
+#hyprland-window, #tray {
+  padding: 2px 6px;
+  margin: 0 2px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Subtle separators for right-side group */
+#pulseaudio, #tray, #network, #battery, #clock {
+  border-left: 1px solid rgba(255,255,255,0.10);
+  padding-left: 8px;
+  margin-left: 4px;
+}
+
+/* ---------- Custom-Power ---------- */
+#custom-power {
+  margin-left: 3px;
+  margin-right: 3px;
+  border-radius: 4px;
+
+  padding: 0 6px;
+  font-size: 16px;                  /* keep icon readable */
+
+  color: #00ff99;
+}
+
+#custom-power:hover {
+  background: rgba(89,89,89,0.75);
+  color: #ddd;
+}
+
+
+/* ---------- Window title ---------- */
+#hyprland-window, #window {
+   color: #ddd;
+   opacity: 0.92;
+   margin-left: 8px; }
+
+/* ---------- Pulseaudio ---------- */
+#pulseaudio.muted { color: #bbbbbb; opacity: 0.65; }
+#pulseaudio.bluetooth { color: #6aa9ff; }
+#pulseaudio.headphones { color: #91e0b9; }
+#pulseaudio.hdmi { color: #b399ff; }
+#pulseaudio > * { margin-right: 4px; }
+
+/* ---------- Network location chip (match workspace style) ---------- */
+#custom-network {
+  padding: 0 6px;
+  margin: 0 2px;
+  border-radius: 4px;
+  background: rgba(26,26,26,0.75);
+  border: 1px solid rgba(89,89,89,0.67);
+  color: #ddd;
+}
+
+/* HOME = active workspace */
+#custom-network.home {
+  background: linear-gradient(45deg,
+    rgba(51,204,255,0.10),
+    rgba(0,255,153,0.40));
+  border-color: rgba(51,204,255,0.55);
+  color: #00ff99;
+}
+
+#custom-network:hover {
+  background: rgba(89,89,89,0.75);
+  color: #00ff99;
+  border-color: rgba(51,204,255,0.55);
+}
+
+/* AWAY = inactive workspace */
+#custom-network.away {
+  background: rgba(26,26,26,0.75);
+  border-color: rgba(89,89,89,0.67);
+  color: #ddd;
+}
+
+/* OFFLINE = muted workspace */
+#custom-network.offline {
+  background: rgba(26,26,26,0.55);
+  border-color: rgba(89,89,89,0.45);
+  color: #bbbbbb;
+  opacity: 0.8;
+}
+
+/* ---------- Battery ---------- */
+#battery.warning { color: #00ff99; }
+#battery.critical { color: #ff6b6b; }
+
+/* ---------- Tray icons ---------- */
+#tray * { margin: 0 2px; }
+
+/* ---------- “Active focus” helper (optional) ----------
+   You can add "class": "module-active" to any custom module in config.jsonc
+   to get a light accent background. */
+.module-active {
+  background: linear-gradient(45deg, rgba(51,204,255,0.12), rgba(0,255,153,0.12));
+  border: 1px solid rgba(51,204,255,0.50);
+  border-radius: 5px;
+}

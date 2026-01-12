@@ -1,0 +1,60 @@
+/* --- Wofi theme matching Hyprland look --- */
+/* Hyprland refs:
+   border_size=2 ; rounding=5 ; col.active_border: #33ccff → #00ff99 ; col.inactive_border: #595959aa
+*/
+
+window {
+  background-color: rgba(26,26,26,0.92);
+  border: 2px solid rgba(51,204,255,0.93); /* aqua edge echoing active border */
+  border-radius: 5px;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 16px;
+  /* GTK CSS typically ignores filter/backdrop; keep it simple & compatible */
+}
+
+#input {
+  margin: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(89,89,89,0.67); /* inactive border tone */
+  border-radius: 5px;
+  color: #eeeeee;
+  background-color: rgba(40,40,40,0.88);
+}
+
+#input:focus {
+  border: 2px solid rgba(51,204,255,0.93);         /* aqua focus */
+  box-shadow: inset 0 0 0 1px rgba(0,255,153,0.75); /* subtle mint echo */
+}
+
+#inner-box {
+  padding: 6px;
+}
+
+#scroll {
+  margin: 6px;
+}
+
+/* Each entry “chip” */
+#entry {
+  padding: 10px 12px;
+  border-radius: 5px;
+  color: #eeeeee;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+/* Hover/keyboard focus highlight with your gradient vibe */
+#entry:selected {
+  color: #0a0a0a;
+  background-image: linear-gradient(45deg, rgba(51,204,255,0.32), rgba(0,255,153,0.32));
+  border: 1px solid rgba(0,255,153,0.70);
+}
+
+/* Subtle inactive separator tone */
+#placeholder { color: #aaaaaa; }
+
+/* Optional: show inactive border along the list container edges */
+#outer-box, #list {
+  border: 1px solid rgba(89,89,89,0.67);
+  border-radius: 5px;
+}
