@@ -1,9 +1,9 @@
 {
   "layer": "top",
   "position": "top",
-  "margin-top": 5,
-  "margin-left": 5,
-  "margin-right": 5,
+  "margin-top": 3,
+  "margin-left": 3,
+  "margin-right": 3,
   "margin-bottom": 0,
 
 "hyprland/workspaces": {
@@ -18,9 +18,6 @@
 
 // Right section (system info + custom buttons)
   "modules-right": [
-	"custom/firefox",
-	"custom/thunar",
-	"custom/terminal",
 	"pulseaudio",
 	"tray",
 	"custom/network",
@@ -52,7 +49,7 @@
   // Main line
   "format": "  {volume}%",
   "format-muted": "󰖁  muted",
-  "format-bluetooth": " {volume}% ",
+  "format-bluetooth": " {volume}%",
   "tooltip": true,
   "tooltip-format": "Volume: {volume}%",
 

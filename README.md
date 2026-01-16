@@ -15,6 +15,9 @@ My Arch Linux + Hyprland rice configuration.
 - **kitty/** - Kitty terminal with custom 1984-dark theme
 - **foot/** - Foot terminal config
 - **starship/** - Cross-shell prompt config
+- **zsh/** - Zsh config with keybindings and plugins
+- **nano/** - Nano editor config
+- **shell/** - Shared aliases and functions (sourced by bash/zsh)
 
 ### Theming
 - **gtk-3.0/** & **gtk-4.0/** - GTK theme settings
@@ -40,7 +43,7 @@ rofi wofi dunst
 kitty foot
 
 # Shell
-starship
+starship zsh-autosuggestions zsh-syntax-highlighting nano
 
 # Fonts (AUR)
 ttf-hasklug-nerd ttf-hack-nerd
@@ -62,4 +65,4 @@ These configs are meant for reference/inspiration. To use:
 
 ## License
 
-Feel free to use and adapt. No attribution required. Use at your own risk and skill level. No guarantee or waranty. 
+Feel free to use and adapt. No attribution required.

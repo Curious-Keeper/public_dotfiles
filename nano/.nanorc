@@ -1,0 +1,56 @@
+###############################################################################
+# NANO CONFIG — CLEAN, MODERN, ARCH-FRIENDLY
+# Location: ~/.nanorc
+###############################################################################
+
+############################
+# VISUAL / UI
+############################
+
+set linenumbers          # Show line numbers
+set constantshow         # Always show line/column position
+set minibar              # Compact status bar (nano 6+)
+set indicator            # Scroll position bar on the right
+set softwrap             # Visually wrap long lines
+set mouse                # Enable mouse support (optional)
+
+############################
+# TABS & INDENTATION
+############################
+
+set tabsize 2             # Change to 4 if you prefer
+set tabstospaces          # Convert tabs to spaces
+set trimblanks            # Remove trailing whitespace on save
+
+############################
+# EDITING BEHAVIOR
+############################
+
+set cutfromcursor         # Cut text from cursor forward
+set nowrap                # Don't hard-wrap text
+set quickblank            # Faster exit after save prompt
+set historylog            # Persistent search history
+set multibuffer           # Allow multiple buffers
+set backup                # Create ~ backup files
+set backupdir "~/.cache/nano"
+
+############################
+# SEARCH / NAVIGATION
+############################
+
+set casesensitive         # Searches are case-sensitive
+set regexp                # Enable regex searching
+set positionlog           # Remember cursor position per file
+
+############################
+# PERFORMANCE / SAFETY
+############################
+
+set locking               # Use file locking
+
+############################
+# SYNTAX HIGHLIGHTING
+############################
+
+# Load all default syntax files
+include /usr/share/nano/*.nanorc
