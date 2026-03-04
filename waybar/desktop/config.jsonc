@@ -1,0 +1,189 @@
+{
+  "layer": "top",
+  "position": "top",
+  "margin-top": 3,
+  "margin-left": 3,
+  "margin-right": 3,
+  "margin-bottom": 0,
+
+"hyprland/workspaces": {
+  "swap-icon-label": false
+},
+
+// Left section (workspaces)
+  "modules-left": ["custom/power", "hyprland/workspaces"],
+  // "modules-left": ["custom/power", "hyprland/workspaces", "hyprland/window"],  // with active window title
+
+// Center Section
+  "modules-center": [
+  "custom/screenrec",
+  "clock",
+  "custom/notification",
+  "mpris"
+],
+
+// Right section (system info + custom buttons)
+  "modules-right": [
+	"pulseaudio",
+	"tray",
+	"custom/network",
+	"battery",
+	"custom/arch-menu"
+],
+
+// Custom launchers
+  "custom/firefox": {
+        "format": "",
+        "tooltip": "Open Firefox",
+        "on-click": "firefox"
+},
+
+  "custom/thunar": {
+        "format": "",
+        "tooltip": "Open Thunar",
+        "on-click": "thunar"
+},
+
+  "custom/terminal": {
+        "format": "",
+        "tooltip": "Open Kitty",
+        "on-click": "kitty"
+},
+
+// PulseAudio
+"pulseaudio": {
+  // Main line
+  "format": "  {volume}%",
+  "format-muted": "󰖁  muted",
+  "format-bluetooth": " {volume}%",
+  "tooltip": true,
+  "tooltip-format": "Volume: {volume}%",
+
+// Icon set (requires a Nerd Font / Font Awesome installed on Waybar)
+  "format-icons": {
+    "headphones": "󰋋",
+    "headset": "󰋎",
+    "handsfree": "󰋎",
+    "hdmi": "󰡁",
+    "speaker": ["󰕿","󰖀","󰕾"]
+},
+
+// Actions
+  "on-click": "pavucontrol",
+  "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+  "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+  "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+
+  "scroll-step": 5
+},
+
+// Network Configs (masked SSID: HOME/AWAY)
+  "custom/network": {
+    "exec": "~/.config/waybar/scripts/wifi-location.sh",
+    "return-type": "json",
+    "interval": 5,
+
+// Display
+    "format": "{}",
+    "tooltip": true,
+
+// NM GUI editor
+    "on-click": "nm-connection-editor",
+
+// Right-Click: open TUI with kitty
+    "on-click-right": "kitty -e nmtui",
+
+// Scroll toggles Wi-Fi radio
+    "on-scroll-up": "nmcli radio wifi on",
+    "on-scroll-down": "nmcli radio wifi off"
+},
+
+// Simple Tray
+  "tray": {
+	"icon-size": 18
+},
+
+  "custom/power": {
+	"format": "⏻",
+	"tooltip": false,
+	"on-click": "~/.config/waybar/scripts/power-menu.sh",
+	"interval": 86400,
+	"class": "module-active"
+},
+
+"custom/screenrec": {
+  "exec": "~/.config/waybar/scripts/screenrec-status.sh",
+  "interval": 1,
+  "return-type": "text",
+  "on-click": "~/.local/bin/screenrec-menu",
+  "tooltip": true,
+  "tooltip-format": "Screen recording menu"
+},
+
+// SwayNC Notification Center (click to open panel with calendar)
+"custom/notification": {
+  "tooltip": false,
+  "format": "{icon}",
+  "format-icons": {
+    "notification": "󱅫",
+    "none": "󰂚",
+    "dnd-notification": "󱏧",
+    "dnd-none": "󰂛",
+    "inhibited-notification": "󱅫",
+    "inhibited-none": "󰂚",
+    "dnd-inhibited-notification": "󱏧",
+    "dnd-inhibited-none": "󰂛"
+  },
+  "return-type": "json",
+  "exec-if": "which swaync-client",
+  "exec": "swaync-client -swb",
+  "on-click": "swaync-client -t -sw",
+  "on-click-right": "swaync-client -d -sw",
+  "escape": true
+},
+
+
+  "clock": {
+	"format": "{:%a %b %d  %H:%M}",
+	"tooltip-format": "<tt>{calendar}</tt>",
+	"on-click": "gsimplecal",
+	"on-click-right": "swaync-client -t -sw"
+},
+
+  "battery": {
+    "format": "{icon}",
+    "format-charging": "{icon} 󱐋",
+    "format-plugged": "󰚥",
+    "format-icons": ["󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "tooltip": true
+ },
+
+// MPRIS Media Player (shows currently playing)
+"mpris": {
+  "format": "{player_icon}  {artist} - {title}",
+  "format-paused": "{player_icon}  ⏸ paused",
+  "max-length": 40,
+  "interval": 1,
+  "player-icons": {
+    "default": "♫",
+    "spotify": "",
+    "firefox": "󰈹",
+    "chromium": "",
+    "brave": "󰖟"
+  },
+  "tooltip-format": "{player}: {artist} - {title}\n{album}",
+  "tooltip": true,
+  "on-click": "playerctl play-pause",
+  "on-click-right": "playerctl next",
+  "on-scroll-up": "playerctl previous",
+  "on-scroll-down": "playerctl next"
+},
+
+// Arch Menu (nwg-menu popup, right-click for full drawer)
+  "custom/arch-menu": {
+    "format": "󰣇",
+    "tooltip": false,
+    "on-click": "nwg-menu -va top -ha right",
+"on-click-right": "nwg-drawer -mt 100 -mb 100 -ml 500 -mr 500 -ovl"
+ }
+}

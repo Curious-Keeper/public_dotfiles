@@ -1,0 +1,34 @@
+/*******************************************************
+ * ROFI powermenu
+ *******************************************************/
+configuration {
+    font:            "JetBrainsMono Nerd Font 12";
+    show-icons:      true;
+    icon-theme:      "Papirus-Dark";
+    scroll-method:   0;
+    disable-history: false;
+    sidebar-mode:    false;
+}
+
+@import "~/.config/rofi/config.rasi"
+
+window {
+    width:            180px;
+    location:         northwest;
+    anchor:           northwest;
+    x-offset:         5px;
+    y-offset:         2px;
+    padding:          2px;
+}
+
+listview {
+    lines:     5;
+    columns:   1;
+    scrollbar: false;
+    spacing:   4px;
+}
+
+/* Hide input bar for power menu */
+mainbox {
+    children: [listview];
+}

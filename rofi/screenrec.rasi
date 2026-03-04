@@ -1,0 +1,35 @@
+/*******************************************************
+ * ROFI Screen Recording Menu
+ *******************************************************/
+configuration {
+    font:             "JetBrainsMono Nerd Font 11";
+    show-icons:       false;
+    display-dmenu:    "󰻃 ScreenRec";
+    scroll-method:    0;
+    disable-history:  true;
+}
+
+@import "~/.config/rofi/config.rasi"
+
+/* Override for screenrec layout */
+listview {
+    lines:    9;
+    columns:  1;
+    spacing:  4px;
+}
+
+window {
+    width: 500px;
+}
+
+element-text {
+    horizontal-align: 0;
+}
+
+inputbar {
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: #33ccff;
+}

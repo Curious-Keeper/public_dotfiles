@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# URL is usually passed as the last arg
+url="${*: -1}"
+
+# Open it normally (tab in existing window)
+xdg-open "$url" >/dev/null 2>&1 &
+
+# Give the browser a moment, then focus it (Hyprland will hop workspaces)
+sleep 0.15
+
+# Brave (Jump to) 
+hyprctl dispatch focuswindow "class:^(brave-browser)$" >/dev/null 2>&1 || \

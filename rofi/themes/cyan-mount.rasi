@@ -1,0 +1,199 @@
+/*******************************************************
+ * ROFI Cyan-mount theme (desktop)
+ * Palette from cyan-mount wallpaper: #0C282C #1B5D69 #4ED4EF #80CCDD
+ * Dark teal base, bright cyan borders for visibility.
+ *******************************************************/
+* {
+    background:                  rgba(12, 40, 44, 92%);
+    background-alt:              rgba(27, 93, 105, 88%);
+    foreground:                  #eeeeee;
+    border-color:                rgba(78, 212, 239, 93%);
+
+    normal-background:           transparent;
+    normal-foreground:           @foreground;
+    alternate-normal-background: transparent;
+    alternate-normal-foreground: @foreground;
+
+    selected-normal-background:  rgba(27, 93, 105, 75%);
+    selected-normal-foreground:  #4ED4EF;
+    selected-border:             rgba(78, 212, 239, 55%);
+
+    urgent-background:           rgba(255, 107, 107, 20%);
+    urgent-foreground:           #ff6b6b;
+    selected-urgent-background:  rgba(255, 107, 107, 40%);
+    selected-urgent-foreground:  #ffffff;
+    alternate-urgent-background: @urgent-background;
+    alternate-urgent-foreground: @urgent-foreground;
+
+    active-background:           rgba(78, 212, 239, 20%);
+    active-foreground:           #4ED4EF;
+    selected-active-background:  rgba(27, 93, 105, 75%);
+    selected-active-foreground:  #4ED4EF;
+    alternate-active-background: @active-background;
+    alternate-active-foreground: @active-foreground;
+
+    separatorcolor:              rgba(27, 93, 105, 67%);
+    spacing:                     2;
+    background-color:            transparent;
+}
+
+window {
+    background-color: @background;
+    border:           2px solid;
+    border-radius:    12px;
+    border-color:     @border-color;
+    padding:          12px;
+}
+
+mainbox {
+    border:  0;
+    padding: 0;
+    spacing: 8px;
+}
+
+message {
+    border:       0;
+    padding:      8px;
+}
+
+textbox {
+    text-color: @foreground;
+}
+
+inputbar {
+    spacing:          8px;
+    text-color:       @foreground;
+    padding:          10px 14px;
+    background-color: @background-alt;
+    border:           1px solid;
+    border-color:     rgba(27, 93, 105, 67%);
+    border-radius:    8px;
+    margin:           0 0 8px 0;
+}
+
+case-indicator {
+    spacing:    0;
+    text-color: @foreground;
+}
+
+entry {
+    spacing:          0;
+    text-color:       @foreground;
+    placeholder:      "Search...";
+    placeholder-color: rgba(170, 170, 170, 70%);
+}
+
+prompt {
+    spacing:    0;
+    text-color: #4ED4EF;
+    margin:     0 8px 0 0;
+}
+
+textbox-prompt-colon {
+    expand:     false;
+    str:        "";
+    text-color: @foreground;
+}
+
+listview {
+    fixed-height: false;
+    border:       0;
+    spacing:      4px;
+    scrollbar:    true;
+    padding:      4px 0;
+}
+
+element {
+    border:        1px solid;
+    border-color:  transparent;
+    border-radius: 8px;
+    padding:       8px 12px;
+}
+
+element-icon {
+    size:   24px;
+    margin: 0 10px 0 0;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+}
+
+element.normal.normal {
+    background-color: transparent;
+    text-color:       @foreground;
+}
+
+element.normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @urgent-foreground;
+}
+
+element.normal.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+
+element.selected.normal {
+    background-color: rgba(27, 93, 105, 75%);
+    text-color:       #4ED4EF;
+    border-color:     rgba(78, 212, 239, 55%);
+}
+
+element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+    border-color:     rgba(78, 212, 239, 55%);
+}
+
+element.selected.active {
+    background-color: rgba(27, 93, 105, 75%);
+    text-color:       #4ED4EF;
+    border-color:     rgba(78, 212, 239, 55%);
+}
+
+element.alternate.normal {
+    background-color: transparent;
+    text-color:       @foreground;
+}
+
+element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
+}
+
+element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
+}
+
+scrollbar {
+    width:        6px;
+    border:       0;
+    handle-color: rgba(78, 212, 239, 50%);
+    handle-width: 6px;
+    padding:      0;
+    border-radius: 3px;
+}
+
+mode-switcher {
+    border:       0;
+    padding:      4px;
+}
+
+button {
+    spacing:          0;
+    text-color:       @foreground;
+    padding:          8px 12px;
+    border-radius:    8px;
+    background-color: transparent;
+    border:           1px solid;
+    border-color:     transparent;
+}
+
+button.selected {
+    background-color: rgba(27, 93, 105, 75%);
+    text-color:       #4ED4EF;
+    border-color:     rgba(78, 212, 239, 55%);
+}

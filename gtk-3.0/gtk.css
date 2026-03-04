@@ -1,0 +1,13 @@
+#xfce4-terminal-notebook vte-terminal {
+    padding: 13px;
+}
+
+/* Keep accent colors minimal - only scrollbars */
+scrollbar slider {
+    background-color: rgba(51, 204, 255, 0.5);
+    border-radius: 4px;
+}
+
+scrollbar slider:hover {
+    background-color: #00ff99;
+}

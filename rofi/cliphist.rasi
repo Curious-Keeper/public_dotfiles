@@ -1,0 +1,36 @@
+/*******************************************************
+ * ROFI Clipboard History (cliphist) menu
+ *******************************************************/
+configuration {
+    font:             "JetBrainsMono Nerd Font 11";
+    show-icons:       false;
+    display-dmenu:    "󰅍 Clipboard";
+    scroll-method:    0;
+    disable-history:  true;
+}
+
+@import "~/.config/rofi/config.rasi"
+
+/* Override for clipboard layout */
+listview {
+    lines:    15;
+    columns:  1;
+    spacing:  4px;
+}
+
+window {
+    width: 600px;
+}
+
+element-text {
+    /* Truncate long entries */
+    horizontal-align: 0;
+}
+
+inputbar {
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: #33ccff;
+}

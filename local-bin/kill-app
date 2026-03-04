@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CLOSE_WAIT="${CLOSE_WAIT:-3}"
+TERM_WAIT="${TERM_WAIT:-2}"
+
+win_json="$(hyprctl activewindow -j 2>/dev/null || true)"
+pid="$(printf '%s' "$win_json" | jq -r '.pid // empty')"
+
+if [[ -z "${pid}" || "${pid}" == "null" ]]; then
+  hyprctl dispatch killactive
+  exit 0
+fi
+
+hyprctl dispatch closewindow
+
+for _ in $(seq 1 $((CLOSE_WAIT * 10))); do
+  if ! kill -0 "$pid" 2>/dev/null; then
+    exit 0
+  fi
+  sleep 0.1
+done
+
+kill -TERM "$pid" 2>/dev/null || exit 0
+
+for _ in $(seq 1 $((TERM_WAIT * 10))); do
+  if ! kill -0 "$pid" 2>/dev/null; then
+    exit 0
+  fi
+  sleep 0.1
+done
+
+# Still alive → last resort
+kill -KILL "$pid" 2>/dev/null || true
+

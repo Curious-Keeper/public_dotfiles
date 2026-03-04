@@ -1,0 +1,177 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VID_DIR="${HOME}/Videos"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/screenrec"
+STATE_FILE="${STATE_DIR}/last_recording.txt"
+
+mkdir -p "$VID_DIR" "$STATE_DIR"
+
+ts() { date +%F_%H-%M-%S; }
+
+is_recording() {
+  pgrep -x wf-recorder >/dev/null 2>&1
+}
+
+notify() {
+  # works if you have notify-send (libnotify). If not, harmless.
+  command -v notify-send >/dev/null 2>&1 && notify-send "ScreenRec" "$1" || true
+}
+
+active_window_geom() {
+  # returns: "X,Y WxH"
+  hyprctl activewindow -j | jq -r '.at,.size | "\(.[0]),\(.[1]) \(.[2])x\(.[3])"'
+}
+
+start_record() {
+  local mode="$1"    # mkv | mp4
+  local target="$2"  # region | active
+  local name="recording-$(ts)"
+  local out="${VID_DIR}/${name}.${mode}"
+
+  local geom=""
+  if [[ "$target" == "region" ]]; then
+    geom="$(slurp)"
+  else
+    geom="$(active_window_geom)"
+  fi
+
+  # Store what we started so Stop/Convert knows what to do
+  printf "%s\t%s\t%s\n" "$mode" "$target" "$out" > "$STATE_FILE"
+
+  # Start recorder
+  wf-recorder -g "$geom" -f "$out" &
+  notify "Started (${target}) → ${mode}: $(basename "$out")"
+}
+
+stop_recording() {
+  if ! is_recording; then
+    notify "Not recording."
+    exit 0
+  fi
+  pkill -INT wf-recorder || true
+  notify "Stopped recording."
+}
+
+convert_last_mkv_to_mp4() {
+  # Prefer state file if last mode was mkv; otherwise fall back to newest mkv
+  local last_mkv=""
+  if [[ -f "$STATE_FILE" ]]; then
+    local mode target out
+    IFS=$'\t' read -r mode target out < "$STATE_FILE" || true
+    if [[ "${mode:-}" == "mkv" && -f "${out:-}" ]]; then
+      last_mkv="$out"
+    fi
+  fi
+
+  if [[ -z "$last_mkv" ]]; then
+    last_mkv="$(ls -t "${VID_DIR}"/recording-*.mkv 2>/dev/null | head -n 1 || true)"
+  fi
+
+  if [[ -z "$last_mkv" || ! -f "$last_mkv" ]]; then
+    notify "No MKV found to convert."
+    exit 0
+  fi
+
+  local out_mp4="${last_mkv%.mkv}.mp4"
+
+  ffmpeg -y -i "$last_mkv" \
+    -c:v libx264 -preset veryfast -crf 23 \
+    -c:a aac -b:a 160k \
+    -movflags +faststart \
+    "$out_mp4" >/dev/null 2>&1
+
+  notify "Converted to MP4: $(basename "$out_mp4")"
+}
+
+stop_and_convert_if_mkv() {
+  # Stop
+  stop_recording
+
+  # Convert only if last was mkv
+  if [[ -f "$STATE_FILE" ]]; then
+    local mode target out
+    IFS=$'\t' read -r mode target out < "$STATE_FILE" || true
+    if [[ "${mode:-}" == "mkv" ]]; then
+      # Give it a moment to flush
+      sleep 0.25
+      convert_last_mkv_to_mp4
+    fi
+  fi
+}
+
+toggle_region_mkv_primary_mp4_backup() {
+  # Best workflow:
+  # - Record MKV (bulletproof)
+  # - On stop, auto-convert to MP4 (share-ready)
+  # - Keep MKV as backup
+  if is_recording; then
+    stop_and_convert_if_mkv
+  else
+    start_record "mkv" "region"
+  fi
+}
+
+play_last() {
+  local last
+  last="$(ls -t "${VID_DIR}"/recording-*.* 2>/dev/null | head -n 1 || true)"
+  if [[ -z "$last" ]]; then
+    notify "No recordings found."
+    exit 0
+  fi
+  mpv "$last" >/dev/null 2>&1 &
+}
+
+open_folder() {
+  xdg-open "$VID_DIR" >/dev/null 2>&1 &
+}
+
+STATUS="○ Idle"
+is_recording && STATUS="● REC"
+
+choice="$(
+  printf "%s\n" \
+    "Toggle (Region MKV → auto MP4 on stop, keep MKV backup) [RECOMMENDED]" \
+    "Start (Region → MP4 direct)" \
+    "Start (Region → MKV safe)" \
+    "Start (Active Window → MP4 direct)" \
+    "Start (Active Window → MKV safe)" \
+    "Stop (and convert MKV→MP4 if needed)" \
+    "Convert LAST MKV → MP4" \
+    "Play LAST recording" \
+    "Open Videos folder" \
+  | rofi -dmenu -p "ScreenRec — ${STATUS}" -theme ~/.config/rofi/screenrec.rasi
+)"
+
+case "$choice" in
+  "Toggle (Region MKV → auto MP4 on stop, keep MKV backup) [RECOMMENDED]")
+    toggle_region_mkv_primary_mp4_backup
+    ;;
+  "Start (Region → MP4 direct)")
+    start_record "mp4" "region"
+    ;;
+  "Start (Region → MKV safe)")
+    start_record "mkv" "region"
+    ;;
+  "Start (Active Window → MP4 direct)")
+    start_record "mp4" "active"
+    ;;
+  "Start (Active Window → MKV safe)")
+    start_record "mkv" "active"
+    ;;
+  "Stop (and convert MKV→MP4 if needed)")
+    stop_and_convert_if_mkv
+    ;;
+  "Convert LAST MKV → MP4")
+    convert_last_mkv_to_mp4
+    ;;
+  "Play LAST recording")
+    play_last
+    ;;
+  "Open Videos folder")
+    open_folder
+    ;;
+  *)
+    exit 0
+    ;;
+esac

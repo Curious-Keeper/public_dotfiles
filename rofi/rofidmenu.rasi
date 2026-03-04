@@ -1,0 +1,26 @@
+/*******************************************************
+ * ROFI drun/apps menu
+ *******************************************************/
+configuration {
+    font:                "JetBrainsMono Nerd Font 11";
+    show-icons:          true;
+    icon-theme:          "Papirus-Dark";
+    display-drun:        "Apps";
+    drun-display-format: "{name}";
+    scroll-method:       0;
+    disable-history:     false;
+    sidebar-mode:        false;
+}
+
+@import "~/.config/rofi/config.rasi"
+
+/* Override for apps layout */
+listview {
+    lines:   10;
+    columns: 3;
+    spacing: 8px;
+}
+
+window {
+    width: 600px;
+}
